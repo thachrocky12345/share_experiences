@@ -66,6 +66,20 @@ This module requires the following modules:
   jupyter notebook
 
   ```
+  or with setting:
+  ```
+  vi ~/.ipython/profile_nbserver/ipython_nbconvert_config.py
+  c.NotebookApp.ip = '0.0.0.0'
+  c.NotebookApp.port = 8888
+  c.NotebookApp.open_browser = False
+
+  ```
+  Then
+  ```
+  jupyter notebook password
+  
+  jupyter notebook --ip 0.0.0.0 --port 8888
+  ```
 - test openAI
   ```
   import openai
