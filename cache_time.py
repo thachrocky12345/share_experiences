@@ -13,6 +13,19 @@ MAX_CACHE = 10000
 class CacheExeError(Exception):
     pass
 
+def datetimetz(datetime_stamp, tz=psycopg2.tz.FixedOffsetTimezone()):
+    return datetime_stamp.replace(tzinfo=tz)
+
+def totalseconds(datetime_ts):
+    if not isinstance(datetime_ts, timedelta):
+        raise TypeError("datetime_ts argument must be a timedelta, not {0}".format(type(datetime_ts)))
+    return (datetime_ts.microseconds + (datetime_ts.seconds + datetime_ts.days * 24 * 3600) * 1000000) / 1000000  # python 2.7 can use the total seconds method
+
+
+def timestamp(datetime_ts):
+    datetime_ts = datetimetz(datetime_ts)
+    d = datetime_ts - datetimetz(datetime(1970, 1, 1))
+    return totalseconds(d)
 
 class CacheData(object):
 
