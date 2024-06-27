@@ -4,7 +4,7 @@ from slack_sdk.errors import SlackApiError
 
 # Set your Slack API token here
 # SLACK_API_TOKEN = 'your-slack-api-token'  # Replace with your actual token
-SLACK_API_TOKEN = 'TOKEN'  # Replace with your actual token
+SLACK_API_TOKEN = 'TOKEN'  # Replace with your actual token 
 
 # Initialize the Slack client
 client = WebClient(token=SLACK_API_TOKEN)
