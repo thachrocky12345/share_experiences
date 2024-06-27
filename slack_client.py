@@ -61,7 +61,7 @@ def send_slack_message(snippet):
         permalink = response.get("file").get("permalink")
         client.chat_postMessage(
             channel=channel,
-            text=f':rotating_light: DLAP-API error: {permalink}'
+            text=f':rotating_light:  error: {permalink}'
         )
         log.info(f"Sent {text} to {channel} and got response {response}")
     except Exception as error:
