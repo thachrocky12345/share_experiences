@@ -46,7 +46,35 @@ def send_block_message(channel_id, blocks):
         print(f"Message sent to {channel_id}: {response['ts']}")
     except SlackApiError as e:
         print(f"Error sending message: {e.response['error']}")
-        
+
+def send_slack_message(snippet):
+    permalink = "Slack Error"
+    channel = "nv-test"
+
+    try:
+        client = WebClient(get_parameter("SLACK_TOKEN"))
+        snippet_content = json.dumps(snippet, indent=4) if isinstance(snippet, dict) else str(snippet)
+
+        response = client.files_upload(
+            content=snippet_content, filename=f"{uuid.uuid4()}.json", initial_comment=text
+        )
+        permalink = response.get("file").get("permalink")
+        client.chat_postMessage(
+            channel=channel,
+            text=f':rotating_light: DLAP-API error: {permalink}'
+        )
+        log.info(f"Sent {text} to {channel} and got response {response}")
+    except Exception as error:
+
+        log.error(
+            f"An error occurred while sending message to slack channel {channel}. {str(error)}",
+            exc_info=True,
+        )
+        traceback.print_exc()
+       
+
+    return permalink
+	
 # Usage example
 if __name__ == "__main__":
     channel = '#general'  # Replace with your channel ID or name
